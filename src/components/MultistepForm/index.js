@@ -19,7 +19,6 @@ const MultistepForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
-    control,
   } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -82,7 +81,7 @@ const MultistepForm = () => {
                 pattern: /^(SC|NI|\d{2})\d{6}$/,
               })}
             ></input>
-            {errors.companyNumber && (
+            {errors.companyNumber && watchCompanyDetails[1].length > 7 && (
               <div>Make sure company number is valid.</div>
             )}
             {watchCompanyDetails[0] &&
@@ -119,10 +118,10 @@ const MultistepForm = () => {
               type="text"
               {...register("postcode", {
                 required: true,
-                pattern: /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/,
+                pattern: /^[a-zA-Z]{1,2}\d[a-zA-Z\d]? ?\d[a-zA-Z]{2}$/,
               })}
             ></input>
-            {errors.postcode && (
+            {errors.postcode && watchCompanyAddress[1].length > 4 && (
               <div>Make sure postcode is a valid UK postcode.</div>
             )}
             {watchCompanyAddress[0] &&

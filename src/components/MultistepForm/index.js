@@ -21,10 +21,13 @@ const MultistepForm = () => {
     formState: { errors },
     control,
   } = useForm({
-    mode: "onBlur",
-    reValidateMode: "onBlur",
+    mode: "onChange",
+    reValidateMode: "onChange",
     shouldFocusError: true,
   });
+
+  const watchCompanyDetails = watch(["companyName", "companyNumber"]);
+  const watchCompanyAddress = watch(["address1", "postcode"]);
 
   const renderButton = () => {
     if (formStep === 0) {
@@ -69,7 +72,23 @@ const MultistepForm = () => {
               type="text"
               {...register("companyName", { required: true })}
             ></input>
-            {renderButton()}
+            <input
+              className="form-input"
+              placeholder="Company Number"
+              error={errors.companyNumber}
+              type="text"
+              {...register("companyNumber", {
+                required: true,
+                pattern: /^(SC|NI|\d{2})\d{6}$/,
+              })}
+            ></input>
+            {errors.companyNumber && (
+              <div>Make sure company number is valid.</div>
+            )}
+            {watchCompanyDetails[0] &&
+              watchCompanyDetails[1] &&
+              !errors.companyNumber &&
+              renderButton()}
           </div>
         )}
 
@@ -77,11 +96,39 @@ const MultistepForm = () => {
           <div className="form-element">
             <input
               className="form-input"
-              placeholder="Company Number"
+              placeholder="First Line of Company Address"
               type="text"
-              {...register("companyNumber", { required: true })}
+              {...register("address1", { required: true })}
             ></input>
-            {renderButton()}
+            <input
+              className="form-input"
+              placeholder="Second Line of Company Address"
+              type="text"
+              {...register("address2")}
+            ></input>
+            <input
+              className="form-input"
+              placeholder="Third Line of Company Address"
+              type="text"
+              {...register("address3", { required: true })}
+            ></input>
+            <input
+              className="form-input"
+              placeholder="Postcode"
+              error={errors.postcode}
+              type="text"
+              {...register("postcode", {
+                required: true,
+                pattern: /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/,
+              })}
+            ></input>
+            {errors.postcode && (
+              <div>Make sure postcode is a valid UK postcode.</div>
+            )}
+            {watchCompanyAddress[0] &&
+              watchCompanyAddress[1] &&
+              !errors.postcode &&
+              renderButton()}
           </div>
         )}
 

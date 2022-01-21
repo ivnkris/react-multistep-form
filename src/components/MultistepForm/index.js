@@ -5,6 +5,7 @@ import "./MultistepForm.css";
 
 const MultistepForm = () => {
   const [formStep, setFormStep] = useState(0);
+  const [isContactAddress, setIsContactAddress] = useState(false);
 
   const nextFormStep = () => {
     setFormStep(formStep + 1);
@@ -12,6 +13,10 @@ const MultistepForm = () => {
 
   const lastFormStep = () => {
     setFormStep(formStep - 1);
+  };
+
+  const handleContactAddressChange = () => {
+    setIsContactAddress(!isContactAddress);
   };
 
   const {
@@ -26,7 +31,12 @@ const MultistepForm = () => {
   });
 
   const watchCompanyDetails = watch(["companyName", "companyNumber"]);
-  const watchCompanyAddress = watch(["address1", "postcode"]);
+  const watchCompanyAddress = watch([
+    "address1",
+    "postcode",
+    "contactPostcode",
+  ]);
+  const watchContactDetails = watch(["companyEmail"]);
 
   const renderButton = () => {
     if (formStep === 0) {
@@ -71,6 +81,7 @@ const MultistepForm = () => {
               type="text"
               {...register("companyName", { required: true })}
             ></input>
+
             <input
               className="form-input"
               placeholder="Company Number"
@@ -84,6 +95,7 @@ const MultistepForm = () => {
             {errors.companyNumber && watchCompanyDetails[1].length > 7 && (
               <div>Make sure company number is valid.</div>
             )}
+
             {watchCompanyDetails[0] &&
               watchCompanyDetails[1] &&
               !errors.companyNumber &&
@@ -95,22 +107,25 @@ const MultistepForm = () => {
           <div className="form-element">
             <input
               className="form-input"
-              placeholder="First Line of Company Address"
+              placeholder="First Line of Company Registered Address"
               type="text"
               {...register("address1", { required: true })}
             ></input>
+
             <input
               className="form-input"
-              placeholder="Second Line of Company Address"
+              placeholder="Second Line of Company Registered Address"
               type="text"
               {...register("address2")}
             ></input>
+
             <input
               className="form-input"
-              placeholder="Third Line of Company Address"
+              placeholder="Third Line of Company Registered Address"
               type="text"
-              {...register("address3", { required: true })}
+              {...register("address3")}
             ></input>
+
             <input
               className="form-input"
               placeholder="Postcode"
@@ -124,6 +139,58 @@ const MultistepForm = () => {
             {errors.postcode && watchCompanyAddress[1].length > 4 && (
               <div>Make sure postcode is a valid UK postcode.</div>
             )}
+
+            <label htmlFor="isContactAddress">
+              Is the company's contact address different from the registered
+              address?
+            </label>
+            <input
+              type="checkbox"
+              id="isContactAddress"
+              name="isContactAddress"
+              checked={isContactAddress}
+              onChange={handleContactAddressChange}
+            ></input>
+
+            {isContactAddress && (
+              <div className="form-element">
+                <input
+                  className="form-input"
+                  placeholder="First Line of Company Contact Address"
+                  type="text"
+                  {...register("contactAddress1")}
+                ></input>
+
+                <input
+                  className="form-input"
+                  placeholder="Second Line of Company Contact Address"
+                  type="text"
+                  {...register("contactAddress2")}
+                ></input>
+
+                <input
+                  className="form-input"
+                  placeholder="Third Line of Company Contact Address"
+                  type="text"
+                  {...register("contactAddress3")}
+                ></input>
+
+                <input
+                  className="form-input"
+                  placeholder="Postcode"
+                  error={errors.contactPostcode}
+                  type="text"
+                  {...register("contactPostcode", {
+                    pattern: /^[a-zA-Z]{1,2}\d[a-zA-Z\d]? ?\d[a-zA-Z]{2}$/,
+                  })}
+                ></input>
+                {errors.contactPostcode &&
+                  watchCompanyAddress[2].length > 4 && (
+                    <div>Make sure postcode is a valid UK postcode.</div>
+                  )}
+              </div>
+            )}
+
             {watchCompanyAddress[0] &&
               watchCompanyAddress[1] &&
               !errors.postcode &&
@@ -136,6 +203,7 @@ const MultistepForm = () => {
             <input
               className="form-input"
               placeholder="Company Email"
+              error={errors.companyEmail}
               type="email"
               {...register("companyEmail", {
                 required: true,
@@ -143,7 +211,11 @@ const MultistepForm = () => {
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
               })}
             ></input>
-            {renderButton()}
+            {errors.companyEmail && watchContactDetails[0].length > 6 && (
+              <div>Make sure email address is valid.</div>
+            )}
+
+            {!errors.companyEmail && watchContactDetails[0] && renderButton()}
           </div>
         )}
       </form>

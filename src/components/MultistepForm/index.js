@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import ReactQuill from "react-quill";
 
 import "./MultistepForm.css";
+import "react-quill/dist/quill.snow.css";
 
 const MultistepForm = () => {
   const STEP_COMPANY_DETAILS = 0;
@@ -12,6 +14,7 @@ const MultistepForm = () => {
   const [isContactAddress, setIsContactAddress] = useState(false);
   const [isLimited, setIsLimited] = useState(false);
   const [isVat, setIsVat] = useState(false);
+  const [companyInfo, setCompanyInfo] = useState("");
 
   const nextFormStep = () => {
     setFormStep(formStep + 1);
@@ -37,6 +40,7 @@ const MultistepForm = () => {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -82,7 +86,10 @@ const MultistepForm = () => {
     );
   };
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    data.companyInfo = companyInfo;
+    console.log(data);
+  };
 
   return (
     <div className="form-container">
@@ -102,6 +109,13 @@ const MultistepForm = () => {
               type="text"
               {...register("ownerName", { required: true })}
             ></input>
+
+            <ReactQuill
+              theme="snow"
+              control={control}
+              value={companyInfo}
+              onChange={setCompanyInfo}
+            />
 
             <input
               type="checkbox"

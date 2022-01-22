@@ -4,6 +4,10 @@ import { useState } from "react";
 import "./MultistepForm.css";
 
 const MultistepForm = () => {
+  const STEP_COMPANY_DETAILS = 0;
+  const STEP_COMPANY_ADDRESS = 1;
+  const STEP_CONTACT_DETAILS = 2;
+
   const [formStep, setFormStep] = useState(0);
   const [isContactAddress, setIsContactAddress] = useState(false);
 
@@ -11,7 +15,7 @@ const MultistepForm = () => {
     setFormStep(formStep + 1);
   };
 
-  const lastFormStep = () => {
+  const previousFormStep = () => {
     setFormStep(formStep - 1);
   };
 
@@ -39,33 +43,23 @@ const MultistepForm = () => {
   const watchContactDetails = watch(["companyEmail"]);
 
   const renderButton = () => {
-    if (formStep === 0) {
-      return (
-        <button type="button" onClick={nextFormStep}>
-          Next
-        </button>
-      );
-    } else if (formStep === 1) {
-      return (
-        <div>
-          <button type="button" onClick={lastFormStep}>
+    return (
+      <div>
+        {formStep > STEP_COMPANY_DETAILS && (
+          <button type="button" onClick={previousFormStep}>
             Previous
           </button>
+        )}
+        {formStep < STEP_CONTACT_DETAILS && (
           <button type="button" onClick={nextFormStep}>
             Next
           </button>
-        </div>
-      );
-    } else if (formStep === 2) {
-      return (
-        <div>
-          <button type="button" onClick={lastFormStep}>
-            Previous
-          </button>
+        )}
+        {formStep === STEP_CONTACT_DETAILS && (
           <button type="submit">Submit</button>
-        </div>
-      );
-    }
+        )}
+      </div>
+    );
   };
 
   const onSubmit = (data) => console.log(data);
@@ -140,10 +134,6 @@ const MultistepForm = () => {
               <div>Make sure postcode is a valid UK postcode.</div>
             )}
 
-            <label htmlFor="isContactAddress">
-              Is the company's contact address different from the registered
-              address?
-            </label>
             <input
               type="checkbox"
               id="isContactAddress"
@@ -151,6 +141,10 @@ const MultistepForm = () => {
               checked={isContactAddress}
               onChange={handleContactAddressChange}
             ></input>
+            <label htmlFor="isContactAddress">
+              Is the company's contact address different from the registered
+              address?
+            </label>
 
             {isContactAddress && (
               <div className="form-element">

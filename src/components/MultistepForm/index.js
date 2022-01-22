@@ -10,6 +10,8 @@ const MultistepForm = () => {
 
   const [formStep, setFormStep] = useState(0);
   const [isContactAddress, setIsContactAddress] = useState(false);
+  const [isLimited, setIsLimited] = useState(false);
+  const [isVat, setIsVat] = useState(false);
 
   const nextFormStep = () => {
     setFormStep(formStep + 1);
@@ -23,6 +25,14 @@ const MultistepForm = () => {
     setIsContactAddress(!isContactAddress);
   };
 
+  const handleLimitedChange = () => {
+    setIsLimited(!isLimited);
+  };
+
+  const handleVatChange = () => {
+    setIsVat(!isVat);
+  };
+
   const {
     register,
     handleSubmit,
@@ -34,13 +44,23 @@ const MultistepForm = () => {
     shouldFocusError: true,
   });
 
-  const watchCompanyDetails = watch(["companyName", "companyNumber"]);
+  const watchCompanyDetails = watch([
+    "companyName",
+    "ownerName",
+    "companyNumber",
+  ]);
+
   const watchCompanyAddress = watch([
     "address1",
     "postcode",
     "contactPostcode",
   ]);
-  const watchContactDetails = watch(["companyEmail"]);
+  const watchContactDetails = watch([
+    "companyEmail",
+    "companyEmail2",
+    "phone",
+    "phone2",
+  ]);
 
   const renderButton = () => {
     return (
@@ -78,22 +98,51 @@ const MultistepForm = () => {
 
             <input
               className="form-input"
-              placeholder="Company Number"
-              error={errors.companyNumber}
+              placeholder="Owner's Name"
               type="text"
-              {...register("companyNumber", {
-                required: true,
-                pattern: /^(SC|NI|\d{2})\d{6}$/,
-              })}
+              {...register("ownerName", { required: true })}
             ></input>
-            {errors.companyNumber && watchCompanyDetails[1].length > 7 && (
-              <div>Make sure company number is valid.</div>
+
+            <input
+              type="checkbox"
+              id="isLimited"
+              name="isLimited"
+              {...register("limited")}
+              checked={isLimited}
+              onChange={handleLimitedChange}
+            ></input>
+            <label htmlFor="isLimited">
+              Is the company registered as a limited company?
+            </label>
+
+            {isLimited && (
+              <div className="form-element">
+                <input
+                  className="form-input"
+                  placeholder="Company Number"
+                  error={errors.companyNumber}
+                  type="text"
+                  {...register("companyNumber", {
+                    pattern: /^(SC|NI|\d{2})\d{6}$/,
+                  })}
+                ></input>
+                {errors.companyNumber && watchCompanyDetails[2].length > 7 && (
+                  <div>Make sure company number is valid.</div>
+                )}
+
+                <input
+                  type="checkbox"
+                  id="vat"
+                  name="vat"
+                  {...register("vat")}
+                  checked={isVat}
+                  onChange={handleVatChange}
+                ></input>
+                <label htmlFor="vat">Is the company VAT registered?</label>
+              </div>
             )}
 
-            {watchCompanyDetails[0] &&
-              watchCompanyDetails[1] &&
-              !errors.companyNumber &&
-              renderButton()}
+            {watchCompanyDetails[0] && watchCompanyDetails[1] && renderButton()}
           </div>
         )}
 
@@ -209,7 +258,59 @@ const MultistepForm = () => {
               <div>Make sure email address is valid.</div>
             )}
 
-            {!errors.companyEmail && watchContactDetails[0] && renderButton()}
+            <input
+              className="form-input"
+              placeholder="Alternative Email"
+              error={errors.companyEmail2}
+              type="email"
+              {...register("companyEmail2", {
+                pattern:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              })}
+            ></input>
+            {errors.companyEmail2 && watchContactDetails[1].length > 6 && (
+              <div>Make sure email address is valid.</div>
+            )}
+
+            <input
+              className="form-input"
+              placeholder="Phone Number"
+              error={errors.phone}
+              type="text"
+              {...register("phone", {
+                required: true,
+                pattern: /^(\d|\+{1})\d+$/,
+              })}
+            ></input>
+            {errors.phone && watchContactDetails[2].length > 2 && (
+              <div>Make sure phone number is valid.</div>
+            )}
+
+            <input
+              className="form-input"
+              placeholder="Alternative Phone Number"
+              error={errors.phone2}
+              type="text"
+              {...register("phone2", {
+                pattern: /^(\d|\+{1})\d+$/,
+              })}
+            ></input>
+            {errors.phone2 && watchContactDetails[3].length > 2 && (
+              <div>Make sure phone number is valid.</div>
+            )}
+
+            <input
+              className="form-input"
+              placeholder="Website URL"
+              type="text"
+              {...register("websiteUrl")}
+            ></input>
+
+            {!errors.companyEmail &&
+              !errors.phone &&
+              watchContactDetails[0] &&
+              watchContactDetails[2] &&
+              renderButton()}
           </div>
         )}
       </form>

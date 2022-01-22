@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import ReactQuill from "react-quill";
 
+import ImageUpload from "../ImageUpload";
+
 import "./MultistepForm.css";
 import "react-quill/dist/quill.snow.css";
 
@@ -15,6 +17,7 @@ const MultistepForm = () => {
   const [isLimited, setIsLimited] = useState(false);
   const [isVat, setIsVat] = useState(false);
   const [companyInfo, setCompanyInfo] = useState("");
+  const [imageUrl, setImageUrl] = useState();
 
   const nextFormStep = () => {
     setFormStep(formStep + 1);
@@ -88,6 +91,7 @@ const MultistepForm = () => {
 
   const onSubmit = (data) => {
     data.companyInfo = companyInfo;
+    data.logo = imageUrl;
     console.log(data);
   };
 
@@ -110,12 +114,16 @@ const MultistepForm = () => {
               {...register("ownerName", { required: true })}
             ></input>
 
+            <label>Company Info</label>
             <ReactQuill
               theme="snow"
               control={control}
               value={companyInfo}
               onChange={setCompanyInfo}
             />
+
+            <label>Upload Company Logo</label>
+            <ImageUpload setImageUrl={setImageUrl} imageUrl={imageUrl} />
 
             <input
               type="checkbox"

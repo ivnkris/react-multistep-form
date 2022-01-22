@@ -1,0 +1,25 @@
+.upload-btn {
+}
+
+.upload-btn:hover {
+}
+
+.logo-button {
+}
+
+.preview-image {
+  height: 8rem;
+}
+
+.preview-title {
+  font-size: 1rem;
+}
+
+.card-action-area {
+  justify-content: center;
+}
+
+.uploaded-image-div {
+  margin: 1rem;
+  margin-left: 2rem;
+}

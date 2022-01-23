@@ -11,13 +11,18 @@ const MultistepForm = () => {
   const STEP_COMPANY_DETAILS = 0;
   const STEP_COMPANY_ADDRESS = 1;
   const STEP_CONTACT_DETAILS = 2;
+  const STEP_DOCUMENT_VERIFICATION = 3;
 
   const [formStep, setFormStep] = useState(0);
   const [isContactAddress, setIsContactAddress] = useState(false);
   const [isLimited, setIsLimited] = useState(false);
   const [isVat, setIsVat] = useState(false);
   const [companyInfo, setCompanyInfo] = useState("");
-  const [imageUrl, setImageUrl] = useState();
+  const [logoUrl, setLogoUrl] = useState("");
+  const [idUrl, setIdUrl] = useState("");
+  const [liabilityUrl, setLiabilityUrl] = useState("");
+  const [qualificationUrl, setQualificationUrl] = useState("");
+  const [addressUrl, setAddressUrl] = useState("");
 
   const nextFormStep = () => {
     setFormStep(formStep + 1);
@@ -77,12 +82,12 @@ const MultistepForm = () => {
             Previous
           </button>
         )}
-        {formStep < STEP_CONTACT_DETAILS && (
+        {formStep < STEP_DOCUMENT_VERIFICATION && (
           <button type="button" onClick={nextFormStep}>
             Next
           </button>
         )}
-        {formStep === STEP_CONTACT_DETAILS && (
+        {formStep === STEP_DOCUMENT_VERIFICATION && (
           <button type="submit">Submit</button>
         )}
       </div>
@@ -91,14 +96,18 @@ const MultistepForm = () => {
 
   const onSubmit = (data) => {
     data.companyInfo = companyInfo;
-    data.logo = imageUrl;
+    data.logo = logoUrl;
+    data.idPhoto = idUrl;
+    data.publicLiability = liabilityUrl;
+    data.qualifications = qualificationUrl;
+    data.proofOfAddress = addressUrl;
     console.log(data);
   };
 
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit(onSubmit)}>
-        {formStep === 0 && (
+        {formStep === STEP_COMPANY_DETAILS && (
           <div className="form-element">
             <input
               className="form-input"
@@ -123,7 +132,7 @@ const MultistepForm = () => {
             />
 
             <label>Upload Company Logo</label>
-            <ImageUpload setImageUrl={setImageUrl} imageUrl={imageUrl} />
+            <ImageUpload setImageUrl={setLogoUrl} imageUrl={logoUrl} />
 
             <input
               type="checkbox"
@@ -168,7 +177,7 @@ const MultistepForm = () => {
           </div>
         )}
 
-        {formStep === 1 && (
+        {formStep === STEP_COMPANY_ADDRESS && (
           <div className="form-element">
             <input
               className="form-input"
@@ -263,7 +272,7 @@ const MultistepForm = () => {
           </div>
         )}
 
-        {formStep === 2 && (
+        {formStep === STEP_CONTACT_DETAILS && (
           <div className="form-element">
             <input
               className="form-input"
@@ -276,7 +285,7 @@ const MultistepForm = () => {
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
               })}
             ></input>
-            {errors.companyEmail && watchContactDetails[0].length > 6 && (
+            {errors.companyEmail && watchContactDetails[0].length > 10 && (
               <div>Make sure email address is valid.</div>
             )}
 
@@ -290,7 +299,7 @@ const MultistepForm = () => {
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
               })}
             ></input>
-            {errors.companyEmail2 && watchContactDetails[1].length > 6 && (
+            {errors.companyEmail2 && watchContactDetails[1].length > 10 && (
               <div>Make sure email address is valid.</div>
             )}
 
@@ -304,7 +313,7 @@ const MultistepForm = () => {
                 pattern: /^(\d|\+{1})\d+$/,
               })}
             ></input>
-            {errors.phone && watchContactDetails[2].length > 2 && (
+            {errors.phone && watchContactDetails[2].length > 9 && (
               <div>Make sure phone number is valid.</div>
             )}
 
@@ -317,7 +326,7 @@ const MultistepForm = () => {
                 pattern: /^(\d|\+{1})\d+$/,
               })}
             ></input>
-            {errors.phone2 && watchContactDetails[3].length > 2 && (
+            {errors.phone2 && watchContactDetails[3].length > 9 && (
               <div>Make sure phone number is valid.</div>
             )}
 
@@ -333,6 +342,30 @@ const MultistepForm = () => {
               watchContactDetails[0] &&
               watchContactDetails[2] &&
               renderButton()}
+          </div>
+        )}
+
+        {formStep === STEP_DOCUMENT_VERIFICATION && (
+          <div className="form-element">
+            <label>Upload ID Picture</label>
+            <ImageUpload setImageUrl={setIdUrl} imageUrl={idUrl} />
+
+            <label>Upload Proof of Public Liability</label>
+            <ImageUpload
+              setImageUrl={setLiabilityUrl}
+              imageUrl={liabilityUrl}
+            />
+
+            <label>Upload Proof of Relevant Qualifications</label>
+            <ImageUpload
+              setImageUrl={setQualificationUrl}
+              imageUrl={qualificationUrl}
+            />
+
+            <label>Upload Proof of Address</label>
+            <ImageUpload setImageUrl={setAddressUrl} imageUrl={addressUrl} />
+
+            {idUrl && liabilityUrl && addressUrl && renderButton()}
           </div>
         )}
       </form>

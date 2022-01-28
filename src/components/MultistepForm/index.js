@@ -111,7 +111,7 @@ const MultistepForm = () => {
           <div className="form-element">
             <label className="top-margin">Company Name</label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder="xyz Ltd"
               type="text"
               {...register("companyName", { required: true })}
@@ -119,7 +119,7 @@ const MultistepForm = () => {
 
             <label>Owner's Name</label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder="John Doe"
               type="text"
               {...register("ownerName", { required: true })}
@@ -137,8 +137,9 @@ const MultistepForm = () => {
             <label>Upload Company Logo</label>
             <ImageUpload setImageUrl={setLogoUrl} imageUrl={logoUrl} />
 
+            <div className="form-check"></div>
             <input
-              className="top-margin right-margin"
+              className="right-margin form-check-input"
               type="checkbox"
               id="isLimited"
               name="isLimited"
@@ -146,7 +147,10 @@ const MultistepForm = () => {
               checked={isLimited}
               onChange={handleLimitedChange}
             ></input>
-            <label className="bottom-margin" htmlFor="isLimited">
+            <label
+              className="bottom-margin form-check-label"
+              htmlFor="isLimited"
+            >
               Registered Limited Company?
             </label>
 
@@ -154,7 +158,7 @@ const MultistepForm = () => {
               <div className="form-element">
                 <label>Company Number</label>
                 <input
-                  className="form-input"
+                  className="form-input form-control"
                   placeholder="12345678"
                   error={errors.companyNumber}
                   type="text"
@@ -166,18 +170,23 @@ const MultistepForm = () => {
                   <div>Make sure company number is valid.</div>
                 )}
 
-                <input
-                  className="right-margin"
-                  type="checkbox"
-                  id="vat"
-                  name="vat"
-                  {...register("vat")}
-                  checked={isVat}
-                  onChange={handleVatChange}
-                ></input>
-                <label className="bottom-margin" htmlFor="vat">
-                  VAT Registered?
-                </label>
+                <div className="form-check">
+                  <input
+                    className="right-margin form-check-input"
+                    type="checkbox"
+                    id="vat"
+                    name="vat"
+                    {...register("vat")}
+                    checked={isVat}
+                    onChange={handleVatChange}
+                  ></input>
+                  <label
+                    className="bottom-margin form-check-label"
+                    htmlFor="vat"
+                  >
+                    VAT Registered?
+                  </label>
+                </div>
               </div>
             )}
 
@@ -191,7 +200,7 @@ const MultistepForm = () => {
               First Line of Registered Address
             </label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder="221B Baker Street"
               type="text"
               {...register("address1", { required: true })}
@@ -199,7 +208,7 @@ const MultistepForm = () => {
 
             <label>Second Line of Registered Address</label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder="London"
               type="text"
               {...register("address2")}
@@ -207,7 +216,7 @@ const MultistepForm = () => {
 
             <label>Third Line of Registered Address</label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder=""
               type="text"
               {...register("address3")}
@@ -215,7 +224,7 @@ const MultistepForm = () => {
 
             <label>Postcode</label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder="NW1 6XE"
               error={errors.postcode}
               type="text"
@@ -228,23 +237,28 @@ const MultistepForm = () => {
               <div>Make sure postcode is a valid UK postcode.</div>
             )}
 
-            <input
-              className="right-margin"
-              type="checkbox"
-              id="isContactAddress"
-              name="isContactAddress"
-              checked={isContactAddress}
-              onChange={handleContactAddressChange}
-            ></input>
-            <label className="bottom-margin" htmlFor="isContactAddress">
-              Different Contact Address?
-            </label>
+            <div className="form-check">
+              <input
+                className="right-margin form-check-input"
+                type="checkbox"
+                id="isContactAddress"
+                name="isContactAddress"
+                checked={isContactAddress}
+                onChange={handleContactAddressChange}
+              ></input>
+              <label
+                className="bottom-margin form-check-label"
+                htmlFor="isContactAddress"
+              >
+                Different Contact Address?
+              </label>
+            </div>
 
             {isContactAddress && (
               <div className="form-element">
                 <label>First Line of Contact Address</label>
                 <input
-                  className="form-input"
+                  className="form-input form-control"
                   placeholder="3 Abbey Road"
                   type="text"
                   {...register("contactAddress1")}
@@ -252,7 +266,7 @@ const MultistepForm = () => {
 
                 <label>Second Line of Contact Address</label>
                 <input
-                  className="form-input"
+                  className="form-input form-control"
                   placeholder="London"
                   type="text"
                   {...register("contactAddress2")}
@@ -260,7 +274,7 @@ const MultistepForm = () => {
 
                 <label>Third Line of Contact Address</label>
                 <input
-                  className="form-input"
+                  className="form-input form-control"
                   placeholder=""
                   type="text"
                   {...register("contactAddress3")}
@@ -268,7 +282,7 @@ const MultistepForm = () => {
 
                 <label>Postcode</label>
                 <input
-                  className="form-input"
+                  className="form-input form-control"
                   placeholder="NW8 9AY"
                   error={errors.contactPostcode}
                   type="text"
@@ -294,7 +308,7 @@ const MultistepForm = () => {
           <div className="form-element">
             <label className="top-margin">E-mail Address</label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder="info@company.co.uk"
               error={errors.companyEmail}
               type="email"
@@ -310,7 +324,7 @@ const MultistepForm = () => {
 
             <label>Alternative E-mail Address</label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder="personal@email.co.uk"
               error={errors.companyEmail2}
               type="email"
@@ -325,7 +339,7 @@ const MultistepForm = () => {
 
             <label>Phone Number</label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder="07123 456789"
               error={errors.phone}
               type="text"
@@ -340,7 +354,7 @@ const MultistepForm = () => {
 
             <label>Alternative Phone Number</label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder="07123 456789"
               error={errors.phone2}
               type="text"
@@ -354,7 +368,7 @@ const MultistepForm = () => {
 
             <label>Website URL</label>
             <input
-              className="form-input"
+              className="form-input form-control"
               placeholder="www.company.co.uk"
               type="text"
               {...register("websiteUrl")}

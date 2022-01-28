@@ -4,17 +4,12 @@
 }
 
 body {
-  min-height: 100vh;
 }
 
 .form-container {
   width: 50%;
-  height: 100vh;
   margin: auto;
   padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .form-element {
@@ -23,18 +18,30 @@ body {
 
 .form-input {
   margin: auto;
+  margin-bottom: 1rem;
   padding: 0 1rem;
   width: 100%;
   box-shadow: 1px 0px 10px -1px rgba(255, 255, 255, 0.49);
 }
 
 .form-input::placeholder {
-  text-align: center;
+}
+
+.bottom-margin {
+  margin-bottom: 1rem;
+}
+
+.top-margin {
+  margin-top: 1rem;
+}
+
+.right-margin {
+  margin-right: 0.35rem;
 }
 
 @media screen and (max-width: 768px) {
   .form-container {
-    width: 70%;
+    width: 80%;
   }
 }
 

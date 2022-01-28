@@ -109,22 +109,25 @@ const MultistepForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {formStep === STEP_COMPANY_DETAILS && (
           <div className="form-element">
+            <label className="top-margin">Company Name</label>
             <input
               className="form-input"
-              placeholder="Company Name"
+              placeholder="xyz Ltd"
               type="text"
               {...register("companyName", { required: true })}
             ></input>
 
+            <label>Owner's Name</label>
             <input
               className="form-input"
-              placeholder="Owner's Name"
+              placeholder="John Doe"
               type="text"
               {...register("ownerName", { required: true })}
             ></input>
 
             <label>Company Info</label>
             <ReactQuill
+              className="bottom-margin"
               theme="snow"
               control={control}
               value={companyInfo}
@@ -135,6 +138,7 @@ const MultistepForm = () => {
             <ImageUpload setImageUrl={setLogoUrl} imageUrl={logoUrl} />
 
             <input
+              className="top-margin right-margin"
               type="checkbox"
               id="isLimited"
               name="isLimited"
@@ -142,15 +146,16 @@ const MultistepForm = () => {
               checked={isLimited}
               onChange={handleLimitedChange}
             ></input>
-            <label htmlFor="isLimited">
-              Is the company registered as a limited company?
+            <label className="bottom-margin" htmlFor="isLimited">
+              Registered Limited Company?
             </label>
 
             {isLimited && (
               <div className="form-element">
+                <label>Company Number</label>
                 <input
                   className="form-input"
-                  placeholder="Company Number"
+                  placeholder="12345678"
                   error={errors.companyNumber}
                   type="text"
                   {...register("companyNumber", {
@@ -162,6 +167,7 @@ const MultistepForm = () => {
                 )}
 
                 <input
+                  className="right-margin"
                   type="checkbox"
                   id="vat"
                   name="vat"
@@ -169,7 +175,9 @@ const MultistepForm = () => {
                   checked={isVat}
                   onChange={handleVatChange}
                 ></input>
-                <label htmlFor="vat">Is the company VAT registered?</label>
+                <label className="bottom-margin" htmlFor="vat">
+                  VAT Registered?
+                </label>
               </div>
             )}
 
@@ -179,30 +187,36 @@ const MultistepForm = () => {
 
         {formStep === STEP_COMPANY_ADDRESS && (
           <div className="form-element">
+            <label className="top-margin">
+              First Line of Registered Address
+            </label>
             <input
               className="form-input"
-              placeholder="First Line of Company Registered Address"
+              placeholder="221B Baker Street"
               type="text"
               {...register("address1", { required: true })}
             ></input>
 
+            <label>Second Line of Registered Address</label>
             <input
               className="form-input"
-              placeholder="Second Line of Company Registered Address"
+              placeholder="London"
               type="text"
               {...register("address2")}
             ></input>
 
+            <label>Third Line of Registered Address</label>
             <input
               className="form-input"
-              placeholder="Third Line of Company Registered Address"
+              placeholder=""
               type="text"
               {...register("address3")}
             ></input>
 
+            <label>Postcode</label>
             <input
               className="form-input"
-              placeholder="Postcode"
+              placeholder="NW1 6XE"
               error={errors.postcode}
               type="text"
               {...register("postcode", {
@@ -215,43 +229,47 @@ const MultistepForm = () => {
             )}
 
             <input
+              className="right-margin"
               type="checkbox"
               id="isContactAddress"
               name="isContactAddress"
               checked={isContactAddress}
               onChange={handleContactAddressChange}
             ></input>
-            <label htmlFor="isContactAddress">
-              Is the company's contact address different from the registered
-              address?
+            <label className="bottom-margin" htmlFor="isContactAddress">
+              Different Contact Address?
             </label>
 
             {isContactAddress && (
               <div className="form-element">
+                <label>First Line of Contact Address</label>
                 <input
                   className="form-input"
-                  placeholder="First Line of Company Contact Address"
+                  placeholder="3 Abbey Road"
                   type="text"
                   {...register("contactAddress1")}
                 ></input>
 
+                <label>Second Line of Contact Address</label>
                 <input
                   className="form-input"
-                  placeholder="Second Line of Company Contact Address"
+                  placeholder="London"
                   type="text"
                   {...register("contactAddress2")}
                 ></input>
 
+                <label>Third Line of Contact Address</label>
                 <input
                   className="form-input"
-                  placeholder="Third Line of Company Contact Address"
+                  placeholder=""
                   type="text"
                   {...register("contactAddress3")}
                 ></input>
 
+                <label>Postcode</label>
                 <input
                   className="form-input"
-                  placeholder="Postcode"
+                  placeholder="NW8 9AY"
                   error={errors.contactPostcode}
                   type="text"
                   {...register("contactPostcode", {
@@ -274,9 +292,10 @@ const MultistepForm = () => {
 
         {formStep === STEP_CONTACT_DETAILS && (
           <div className="form-element">
+            <label className="top-margin">E-mail Address</label>
             <input
               className="form-input"
-              placeholder="Company Email"
+              placeholder="info@company.co.uk"
               error={errors.companyEmail}
               type="email"
               {...register("companyEmail", {
@@ -289,9 +308,10 @@ const MultistepForm = () => {
               <div>Make sure email address is valid.</div>
             )}
 
+            <label>Alternative E-mail Address</label>
             <input
               className="form-input"
-              placeholder="Alternative Email"
+              placeholder="personal@email.co.uk"
               error={errors.companyEmail2}
               type="email"
               {...register("companyEmail2", {
@@ -303,36 +323,39 @@ const MultistepForm = () => {
               <div>Make sure email address is valid.</div>
             )}
 
+            <label>Phone Number</label>
             <input
               className="form-input"
-              placeholder="Phone Number"
+              placeholder="07123 456789"
               error={errors.phone}
               type="text"
               {...register("phone", {
                 required: true,
-                pattern: /^(\d|\+{1})\d+$/,
+                pattern: /^(\d|\+{1})\d|\s+$/,
               })}
             ></input>
             {errors.phone && watchContactDetails[2].length > 9 && (
               <div>Make sure phone number is valid.</div>
             )}
 
+            <label>Alternative Phone Number</label>
             <input
               className="form-input"
-              placeholder="Alternative Phone Number"
+              placeholder="07123 456789"
               error={errors.phone2}
               type="text"
               {...register("phone2", {
-                pattern: /^(\d|\+{1})\d+$/,
+                pattern: /^(\d|\+{1})\d|\s+$/,
               })}
             ></input>
             {errors.phone2 && watchContactDetails[3].length > 9 && (
               <div>Make sure phone number is valid.</div>
             )}
 
+            <label>Website URL</label>
             <input
               className="form-input"
-              placeholder="Website URL"
+              placeholder="www.company.co.uk"
               type="text"
               {...register("websiteUrl")}
             ></input>

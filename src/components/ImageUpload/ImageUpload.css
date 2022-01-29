@@ -7,6 +7,20 @@
 .logo-button {
 }
 
+.btn-secondary {
+  background-color: #a222cd;
+  border-color: #a222cd;
+  color: #fff;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background-color: #9410c0;
+  border-color: #9410c0;
+  color: #fff;
+}
+
 .preview-image {
   height: 8rem;
 }

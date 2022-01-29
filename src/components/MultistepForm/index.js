@@ -78,17 +78,30 @@ const MultistepForm = () => {
     return (
       <div>
         {formStep > STEP_COMPANY_DETAILS && (
-          <button type="button" onClick={previousFormStep}>
+          <button
+            className="btn btn-primary m-1"
+            type="button"
+            onClick={previousFormStep}
+          >
             Previous
           </button>
         )}
         {formStep < STEP_DOCUMENT_VERIFICATION && (
-          <button type="button" disabled={checkErrors} onClick={nextFormStep}>
+          <button
+            className="btn btn-success m-1"
+            type="button"
+            disabled={checkErrors}
+            onClick={nextFormStep}
+          >
             Next
           </button>
         )}
         {formStep === STEP_DOCUMENT_VERIFICATION && (
-          <button type="submit" disabled={checkErrors}>
+          <button
+            className="btn btn-success m-1"
+            type="submit"
+            disabled={checkErrors}
+          >
             Submit
           </button>
         )}
@@ -405,8 +418,9 @@ const MultistepForm = () => {
 
             <label className="required">Upload Proof of Address</label>
             <ImageUpload setImageUrl={setAddressUrl} imageUrl={addressUrl} />
-
-            {renderButton(!idUrl || !liabilityUrl || !addressUrl)}
+            <div className="top-margin">
+              {renderButton(!idUrl || !liabilityUrl || !addressUrl)}
+            </div>
           </div>
         )}
       </form>

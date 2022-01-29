@@ -34,9 +34,17 @@
 
 .required:after {
   content: "*";
-  color: red;
+  color: #db0000;
   vertical-align: super;
   font-size: 70%;
+}
+
+.btn-primary {
+  background-color: #1871cc;
+}
+
+.btn-success {
+  background-color: #02844e;
 }
 
 @media screen and (max-width: 768px) {

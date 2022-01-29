@@ -36,7 +36,7 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
   };
 
   return (
-    <div className="">
+    <div className="my-1">
       <ImageUploading value={images} onChange={onChange} dataURLKey="data_url">
         {({ imageList, onImageUpload, onImageRemoveAll }) => (
           <div>
@@ -54,11 +54,17 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
 
               {imageList.length !== 0 && (
                 <div>
-                  <button className="logo-button" onClick={onImageRemoveAll}>
+                  <button
+                    className="btn btn-danger m-1"
+                    onClick={onImageRemoveAll}
+                  >
                     <span className="">Delete</span>
                   </button>
 
-                  <button className="logo-button" onClick={onImageUpload}>
+                  <button
+                    className="btn btn-warning m-1"
+                    onClick={onImageUpload}
+                  >
                     <span className="">Edit</span>
                   </button>
                 </div>
@@ -67,7 +73,11 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
 
             {imageList.length !== 0 && (
               <div className="d-flex gap-2 justify-content-center py-2">
-                <button type="button" onClick={onUpload}>
+                <button
+                  className="btn btn-success"
+                  type="button"
+                  onClick={onUpload}
+                >
                   Upload
                 </button>
               </div>
@@ -77,7 +87,7 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
               {imageList.length === 0 && (
                 <button
                   type="button"
-                  className="upload-btn"
+                  className="btn btn-secondary"
                   onClick={onImageUpload}
                 >
                   Select Image

@@ -74,7 +74,7 @@ const MultistepForm = () => {
     "phone2",
   ]);
 
-  const renderButton = () => {
+  const renderButton = (checkErrors) => {
     return (
       <div>
         {formStep > STEP_COMPANY_DETAILS && (
@@ -83,12 +83,14 @@ const MultistepForm = () => {
           </button>
         )}
         {formStep < STEP_DOCUMENT_VERIFICATION && (
-          <button type="button" onClick={nextFormStep}>
+          <button type="button" disabled={checkErrors} onClick={nextFormStep}>
             Next
           </button>
         )}
         {formStep === STEP_DOCUMENT_VERIFICATION && (
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={checkErrors}>
+            Submit
+          </button>
         )}
       </div>
     );
@@ -190,7 +192,7 @@ const MultistepForm = () => {
               </div>
             )}
 
-            {watchCompanyDetails[0] && watchCompanyDetails[1] && renderButton()}
+            {renderButton(!watchCompanyDetails[0] || !watchCompanyDetails[1])}
           </div>
         )}
 
@@ -297,10 +299,11 @@ const MultistepForm = () => {
               </div>
             )}
 
-            {watchCompanyAddress[0] &&
-              watchCompanyAddress[1] &&
-              !errors.postcode &&
-              renderButton()}
+            {renderButton(
+              !watchCompanyAddress[0] ||
+                !watchCompanyAddress[1] ||
+                errors.postcode
+            )}
           </div>
         )}
 
@@ -374,11 +377,12 @@ const MultistepForm = () => {
               {...register("websiteUrl")}
             ></input>
 
-            {!errors.companyEmail &&
-              !errors.phone &&
-              watchContactDetails[0] &&
-              watchContactDetails[2] &&
-              renderButton()}
+            {renderButton(
+              errors.companyEmail ||
+                errors.phone ||
+                !watchContactDetails[0] ||
+                !watchContactDetails[2]
+            )}
           </div>
         )}
 
@@ -402,7 +406,7 @@ const MultistepForm = () => {
             <label>Upload Proof of Address</label>
             <ImageUpload setImageUrl={setAddressUrl} imageUrl={addressUrl} />
 
-            {idUrl && liabilityUrl && addressUrl && renderButton()}
+            {renderButton(!idUrl || !liabilityUrl || !addressUrl)}
           </div>
         )}
       </form>

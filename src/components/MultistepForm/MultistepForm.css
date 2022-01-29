@@ -3,9 +3,6 @@
   box-sizing: border-box;
 }
 
-body {
-}
-
 .form-container {
   width: 50%;
   margin: auto;
@@ -23,9 +20,6 @@ body {
   width: 100%;
 }
 
-.form-input::placeholder {
-}
-
 .bottom-margin {
   margin-bottom: 1rem;
 }
@@ -36,6 +30,13 @@ body {
 
 .right-margin {
   margin-right: 0.35rem;
+}
+
+.required:after {
+  content: "*";
+  color: red;
+  vertical-align: super;
+  font-size: 70%;
 }
 
 @media screen and (max-width: 768px) {

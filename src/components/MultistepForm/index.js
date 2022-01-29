@@ -111,7 +111,7 @@ const MultistepForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {formStep === STEP_COMPANY_DETAILS && (
           <div className="form-element">
-            <label className="top-margin">Company Name</label>
+            <label className="required top-margin">Company Name</label>
             <input
               className="form-input form-control"
               placeholder="xyz Ltd"
@@ -119,7 +119,7 @@ const MultistepForm = () => {
               {...register("companyName", { required: true })}
             ></input>
 
-            <label>Owner's Name</label>
+            <label className="required">Owner's Name</label>
             <input
               className="form-input form-control"
               placeholder="John Doe"
@@ -198,7 +198,7 @@ const MultistepForm = () => {
 
         {formStep === STEP_COMPANY_ADDRESS && (
           <div className="form-element">
-            <label className="top-margin">
+            <label className="required top-margin">
               First Line of Registered Address
             </label>
             <input
@@ -224,7 +224,7 @@ const MultistepForm = () => {
               {...register("address3")}
             ></input>
 
-            <label>Postcode</label>
+            <label className="required">Postcode</label>
             <input
               className="form-input form-control"
               placeholder="NW1 6XE"
@@ -309,7 +309,7 @@ const MultistepForm = () => {
 
         {formStep === STEP_CONTACT_DETAILS && (
           <div className="form-element">
-            <label className="top-margin">E-mail Address</label>
+            <label className="required top-margin">E-mail Address</label>
             <input
               className="form-input form-control"
               placeholder="info@company.co.uk"
@@ -340,7 +340,7 @@ const MultistepForm = () => {
               <div>Make sure email address is valid.</div>
             )}
 
-            <label>Phone Number</label>
+            <label className="required">Phone Number</label>
             <input
               className="form-input form-control"
               placeholder="07123 456789"
@@ -388,10 +388,10 @@ const MultistepForm = () => {
 
         {formStep === STEP_DOCUMENT_VERIFICATION && (
           <div className="form-element">
-            <label>Upload ID Picture</label>
+            <label className="required">Upload ID Picture</label>
             <ImageUpload setImageUrl={setIdUrl} imageUrl={idUrl} />
 
-            <label>Upload Proof of Public Liability</label>
+            <label className="required">Upload Proof of Public Liability</label>
             <ImageUpload
               setImageUrl={setLiabilityUrl}
               imageUrl={liabilityUrl}
@@ -403,7 +403,7 @@ const MultistepForm = () => {
               imageUrl={qualificationUrl}
             />
 
-            <label>Upload Proof of Address</label>
+            <label className="required">Upload Proof of Address</label>
             <ImageUpload setImageUrl={setAddressUrl} imageUrl={addressUrl} />
 
             {renderButton(!idUrl || !liabilityUrl || !addressUrl)}

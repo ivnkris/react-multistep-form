@@ -166,7 +166,11 @@ const MultistepForm = () => {
               <div className="form-element">
                 <label>Company Number</label>
                 <input
-                  className="form-input form-control"
+                  className={`form-input form-control ${
+                    errors.companyNumber && watchCompanyDetails[2].length > 7
+                      ? "border-danger"
+                      : ""
+                  }`}
                   placeholder="e.g. 12345678"
                   error={errors.companyNumber}
                   type="text"
@@ -175,7 +179,9 @@ const MultistepForm = () => {
                   })}
                 ></input>
                 {errors.companyNumber && watchCompanyDetails[2].length > 7 && (
-                  <div>Make sure company number is valid.</div>
+                  <div className="error-handling-container">
+                    Make sure company number is valid
+                  </div>
                 )}
 
                 <div className="form-check">
@@ -247,7 +253,11 @@ const MultistepForm = () => {
 
             <label className="required">Postcode</label>
             <input
-              className="form-input form-control"
+              className={`form-input form-control ${
+                errors.postcode && watchCompanyAddress[1].length > 4
+                  ? "border-danger"
+                  : ""
+              }`}
               placeholder="e.g. NW1 6XE"
               error={errors.postcode}
               type="text"
@@ -257,7 +267,9 @@ const MultistepForm = () => {
               })}
             ></input>
             {errors.postcode && watchCompanyAddress[1].length > 4 && (
-              <div>Make sure postcode is a valid UK postcode.</div>
+              <div className="error-handling-container">
+                Make sure postcode is a valid UK postcode
+              </div>
             )}
 
             <div className="form-check">
@@ -307,7 +319,11 @@ const MultistepForm = () => {
 
                 <label className="required">Postcode</label>
                 <input
-                  className="form-input form-control"
+                  className={`form-input form-control ${
+                    errors.contactPostcode && watchCompanyAddress[3].length > 4
+                      ? "border-danger"
+                      : ""
+                  }`}
                   placeholder="e.g. NW8 9AY"
                   error={errors.contactPostcode}
                   type="text"
@@ -317,7 +333,9 @@ const MultistepForm = () => {
                 ></input>
                 {errors.contactPostcode &&
                   watchCompanyAddress[3].length > 4 && (
-                    <div>Make sure postcode is a valid UK postcode.</div>
+                    <div className="error-handling-container">
+                      Make sure postcode is a valid UK postcode
+                    </div>
                   )}
               </div>
             )}
@@ -338,7 +356,11 @@ const MultistepForm = () => {
           <div className="form-element">
             <label className="required mt-1">E-mail Address</label>
             <input
-              className="form-input form-control"
+              className={`form-input form-control ${
+                errors.companyEmail && watchContactDetails[0].length > 10
+                  ? "border-danger"
+                  : ""
+              }`}
               placeholder="e.g. info@company.co.uk"
               error={errors.companyEmail}
               type="email"
@@ -349,12 +371,18 @@ const MultistepForm = () => {
               })}
             ></input>
             {errors.companyEmail && watchContactDetails[0].length > 10 && (
-              <div>Make sure email address is valid.</div>
+              <div className="error-handling-container">
+                Make sure email address is valid
+              </div>
             )}
 
             <label>Alternative E-mail Address</label>
             <input
-              className="form-input form-control"
+              className={`form-input form-control ${
+                errors.companyEmail2 && watchContactDetails[1].length > 10
+                  ? "border-danger"
+                  : ""
+              }`}
               placeholder="e.g. personal@email.co.uk"
               error={errors.companyEmail2}
               type="email"
@@ -364,27 +392,40 @@ const MultistepForm = () => {
               })}
             ></input>
             {errors.companyEmail2 && watchContactDetails[1].length > 10 && (
-              <div>Make sure email address is valid.</div>
+              <div className="error-handling-container">
+                Make sure email address is valid
+              </div>
             )}
 
             <label className="required">Phone Number</label>
             <input
-              className="form-input form-control"
+              className={`form-input form-control ${
+                errors.phone && watchContactDetails[2].length > 9
+                  ? "border-danger"
+                  : ""
+              }`}
               placeholder="e.g. 07123 456789"
               error={errors.phone}
               type="text"
               {...register("phone", {
                 required: true,
                 pattern: /^(\d|\+{1})\d|\s+$/,
+                minLength: 10,
               })}
             ></input>
             {errors.phone && watchContactDetails[2].length > 9 && (
-              <div>Make sure phone number is valid.</div>
+              <div className="error-handling-container">
+                Make sure phone number is valid
+              </div>
             )}
 
             <label>Alternative Phone Number</label>
             <input
-              className="form-input form-control"
+              className={`form-input form-control ${
+                errors.phone2 && watchContactDetails[3].length > 9
+                  ? "border-danger"
+                  : ""
+              }`}
               placeholder="e.g. 07123 456789"
               error={errors.phone2}
               type="text"
@@ -393,7 +434,9 @@ const MultistepForm = () => {
               })}
             ></input>
             {errors.phone2 && watchContactDetails[3].length > 9 && (
-              <div>Make sure phone number is valid.</div>
+              <div className="error-handling-container">
+                Make sure phone number is valid
+              </div>
             )}
 
             <label>Website URL</label>

@@ -12,7 +12,10 @@ const MultistepForm = () => {
   const STEP_COMPANY_INFO = 1;
   const STEP_COMPANY_ADDRESS = 2;
   const STEP_CONTACT_DETAILS = 3;
-  const STEP_DOCUMENT_VERIFICATION = 4;
+  const STEP_ID_VERIFICATION = 4;
+  const STEP_LIABILITY_VERIFICATION = 5;
+  const STEP_QUALIFICATIONS_VERIFICATION = 6;
+  const STEP_ADDRESS_VERIFICATION = 7;
 
   const [formStep, setFormStep] = useState(0);
   const [isContactAddress, setIsContactAddress] = useState(false);
@@ -81,16 +84,16 @@ const MultistepForm = () => {
       <div>
         {formStep > STEP_COMPANY_DETAILS && (
           <button
-            className="btn btn-primary m-1"
+            className="btn btn-primary mt-1 mb-1 me-1"
             type="button"
             onClick={previousFormStep}
           >
             Previous
           </button>
         )}
-        {formStep < STEP_DOCUMENT_VERIFICATION && (
+        {formStep < STEP_ADDRESS_VERIFICATION && (
           <button
-            className="btn btn-success m-1"
+            className="btn btn-success mt-1 mb-1"
             type="button"
             disabled={checkErrors}
             onClick={nextFormStep}
@@ -98,9 +101,9 @@ const MultistepForm = () => {
             Next
           </button>
         )}
-        {formStep === STEP_DOCUMENT_VERIFICATION && (
+        {formStep === STEP_ADDRESS_VERIFICATION && (
           <button
-            className="btn btn-success m-1"
+            className="btn btn-success mt-1 mb-1 me-1"
             type="submit"
             disabled={checkErrors}
           >
@@ -126,7 +129,7 @@ const MultistepForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         {formStep === STEP_COMPANY_DETAILS && (
           <div className="form-element">
-            <label className="required top-margin">Company Name</label>
+            <label className="required mt-1">Company Name</label>
             <input
               className="form-input form-control"
               placeholder="e.g. xyz Ltd"
@@ -147,7 +150,7 @@ const MultistepForm = () => {
 
             <div className="form-check"></div>
             <input
-              className="right-margin form-check-input"
+              className="me-1 form-check-input"
               type="checkbox"
               id="isLimited"
               name="isLimited"
@@ -155,10 +158,7 @@ const MultistepForm = () => {
               checked={isLimited}
               onChange={handleLimitedChange}
             ></input>
-            <label
-              className="bottom-margin form-check-label"
-              htmlFor="isLimited"
-            >
+            <label className="mb-1 form-check-label" htmlFor="isLimited">
               Registered Limited Company?
             </label>
 
@@ -180,7 +180,7 @@ const MultistepForm = () => {
 
                 <div className="form-check">
                   <input
-                    className="right-margin form-check-input"
+                    className="me-1 form-check-input"
                     type="checkbox"
                     id="vat"
                     name="vat"
@@ -188,10 +188,7 @@ const MultistepForm = () => {
                     checked={isVat}
                     onChange={handleVatChange}
                   ></input>
-                  <label
-                    className="bottom-margin form-check-label"
-                    htmlFor="vat"
-                  >
+                  <label className="mb-1 form-check-label" htmlFor="vat">
                     VAT Registered?
                   </label>
                 </div>
@@ -208,7 +205,7 @@ const MultistepForm = () => {
               <div className="company-info-container">
                 <label>Company Info</label>
                 <ReactQuill
-                  className="bottom-margin company-info-field"
+                  className="mb-1 company-info-field"
                   theme="snow"
                   control={control}
                   value={companyInfo}
@@ -222,7 +219,7 @@ const MultistepForm = () => {
 
         {formStep === STEP_COMPANY_ADDRESS && (
           <div className="form-element">
-            <label className="required top-margin">
+            <label className="required mt-1">
               First Line of Registered Address
             </label>
             <input
@@ -265,7 +262,7 @@ const MultistepForm = () => {
 
             <div className="form-check">
               <input
-                className="right-margin form-check-input"
+                className="me-1 form-check-input"
                 type="checkbox"
                 id="isContactAddress"
                 name="isContactAddress"
@@ -273,7 +270,7 @@ const MultistepForm = () => {
                 onChange={handleContactAddressChange}
               ></input>
               <label
-                className="bottom-margin form-check-label"
+                className="mb-1 form-check-label"
                 htmlFor="isContactAddress"
               >
                 Different Contact Address?
@@ -339,7 +336,7 @@ const MultistepForm = () => {
 
         {formStep === STEP_CONTACT_DETAILS && (
           <div className="form-element">
-            <label className="required top-margin">E-mail Address</label>
+            <label className="required mt-1">E-mail Address</label>
             <input
               className="form-input form-control"
               placeholder="e.g. info@company.co.uk"
@@ -416,28 +413,45 @@ const MultistepForm = () => {
           </div>
         )}
 
-        {formStep === STEP_DOCUMENT_VERIFICATION && (
+        {formStep === STEP_ID_VERIFICATION && (
           <div className="form-element">
             <label className="required">Upload ID Picture</label>
             <ImageUpload setImageUrl={setIdUrl} imageUrl={idUrl} />
 
+            <div className="mt-2">{renderButton(!idUrl)}</div>
+          </div>
+        )}
+
+        {formStep === STEP_LIABILITY_VERIFICATION && (
+          <div className="form-element">
             <label className="required">Upload Proof of Public Liability</label>
             <ImageUpload
               setImageUrl={setLiabilityUrl}
               imageUrl={liabilityUrl}
             />
 
+            <div className="mt-2">{renderButton(!liabilityUrl)}</div>
+          </div>
+        )}
+
+        {formStep === STEP_QUALIFICATIONS_VERIFICATION && (
+          <div className="form-element">
             <label>Upload Proof of Relevant Qualifications</label>
             <ImageUpload
               setImageUrl={setQualificationUrl}
               imageUrl={qualificationUrl}
             />
 
+            <div className="mt-2">{renderButton()}</div>
+          </div>
+        )}
+
+        {formStep === STEP_ADDRESS_VERIFICATION && (
+          <div className="form-element">
             <label className="required">Upload Proof of Address</label>
             <ImageUpload setImageUrl={setAddressUrl} imageUrl={addressUrl} />
-            <div className="top-margin">
-              {renderButton(!idUrl || !liabilityUrl || !addressUrl)}
-            </div>
+
+            <div className="mt-2">{renderButton(!addressUrl)}</div>
           </div>
         )}
       </form>

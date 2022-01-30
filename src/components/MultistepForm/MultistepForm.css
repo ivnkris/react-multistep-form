@@ -20,18 +20,6 @@
   width: 100%;
 }
 
-.bottom-margin {
-  margin-bottom: 1rem;
-}
-
-.top-margin {
-  margin-top: 1rem;
-}
-
-.right-margin {
-  margin-right: 0.35rem;
-}
-
 .required:after {
   content: "*";
   color: #db0000;

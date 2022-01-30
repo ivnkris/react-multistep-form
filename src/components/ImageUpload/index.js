@@ -40,7 +40,7 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
       <ImageUploading value={images} onChange={onChange} dataURLKey="data_url">
         {({ imageList, onImageUpload, onImageRemoveAll }) => (
           <div>
-            <div className="card-action-area text-center">
+            <div className="card-action-area">
               {images.length !== 0 && (
                 <div>
                   <img
@@ -55,7 +55,7 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
               {imageList.length !== 0 && (
                 <div>
                   <button
-                    className="btn btn-danger m-1"
+                    className="btn btn-danger mt-1 mb-1 me-2"
                     onClick={onImageRemoveAll}
                   >
                     <span className="">Delete</span>
@@ -72,7 +72,7 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
             </div>
 
             {imageList.length !== 0 && (
-              <div className="d-flex gap-2 justify-content-center py-2">
+              <div className="d-flex gap-2 py-2">
                 <button
                   className="btn btn-success"
                   type="button"
@@ -83,7 +83,7 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
               </div>
             )}
 
-            <div className="image-upload-actions">
+            <div>
               {imageList.length === 0 && (
                 <button
                   type="button"

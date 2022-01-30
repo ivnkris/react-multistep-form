@@ -4,7 +4,7 @@
 }
 
 .form-container {
-  width: 50%;
+  width: 60%;
   margin: auto;
   padding: 0.5rem;
 }
@@ -47,14 +47,46 @@
   background-color: #02844e;
 }
 
+.company-info-container {
+  min-height: 40vh;
+}
+
+.company-info-field {
+  height: 40vh;
+}
+
+.company-info-top-margin {
+  margin-top: 4rem;
+}
+
 @media screen and (max-width: 768px) {
   .form-container {
     width: 80%;
+  }
+
+  .company-info-container {
+    min-height: 70vh;
+  }
+
+  .company-info-field {
+    height: 70vh;
   }
 }
 
 @media screen and (max-width: 480px) {
   .form-container {
     width: 90%;
+  }
+
+  .company-info-container {
+    min-height: 70vh;
+  }
+
+  .company-info-field {
+    height: 70vh;
+  }
+
+  .company-info-top-margin {
+    margin-top: 5rem;
   }
 }

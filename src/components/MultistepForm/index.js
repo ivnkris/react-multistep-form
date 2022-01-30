@@ -9,9 +9,10 @@ import "react-quill/dist/quill.snow.css";
 
 const MultistepForm = () => {
   const STEP_COMPANY_DETAILS = 0;
-  const STEP_COMPANY_ADDRESS = 1;
-  const STEP_CONTACT_DETAILS = 2;
-  const STEP_DOCUMENT_VERIFICATION = 3;
+  const STEP_COMPANY_INFO = 1;
+  const STEP_COMPANY_ADDRESS = 2;
+  const STEP_CONTACT_DETAILS = 3;
+  const STEP_DOCUMENT_VERIFICATION = 4;
 
   const [formStep, setFormStep] = useState(0);
   const [isContactAddress, setIsContactAddress] = useState(false);
@@ -141,15 +142,6 @@ const MultistepForm = () => {
               {...register("ownerName", { required: true })}
             ></input>
 
-            <label>Company Info</label>
-            <ReactQuill
-              className="bottom-margin"
-              theme="snow"
-              control={control}
-              value={companyInfo}
-              onChange={setCompanyInfo}
-            />
-
             <label>Upload Company Logo</label>
             <ImageUpload setImageUrl={setLogoUrl} imageUrl={logoUrl} />
 
@@ -208,6 +200,24 @@ const MultistepForm = () => {
 
             {renderButton(!watchCompanyDetails[0] || !watchCompanyDetails[1])}
           </div>
+        )}
+
+        {formStep === STEP_COMPANY_INFO && (
+          <>
+            <div className="form-element">
+              <div className="company-info-container">
+                <label>Company Info</label>
+                <ReactQuill
+                  className="bottom-margin company-info-field"
+                  theme="snow"
+                  control={control}
+                  value={companyInfo}
+                  onChange={setCompanyInfo}
+                />
+              </div>
+            </div>
+            <div className="company-info-top-margin">{renderButton()}</div>
+          </>
         )}
 
         {formStep === STEP_COMPANY_ADDRESS && (

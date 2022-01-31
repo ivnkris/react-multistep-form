@@ -13,8 +13,8 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
   };
 
   const onUpload = async () => {
-    const file = images[0].file;
-    const fileName = uuidv4();
+    let files = [];
+    let fileNames = [];
 
     const config = {
       bucketName: process.env.REACT_APP_BUCKET_NAME,
@@ -25,32 +25,59 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
 
     const ReactS3Client = new S3(config);
 
-    const s3Data = await ReactS3Client.uploadFile(file, fileName);
+    for (let i = 0; i < images.length; i++) {
+      files[i] = images[i].file;
+      fileNames[i] = uuidv4();
 
-    if (s3Data.status === 204) {
-      setImageUrl(s3Data.location);
-      setImages([]);
-    } else {
-      console.log("Failed to upload image");
+      const s3Data = await ReactS3Client.uploadFile(files[i], fileNames[i]);
+
+      if (s3Data.status === 204) {
+        setImageUrl((imageUrl) => [...imageUrl, s3Data.location]);
+      } else {
+        console.log("Failed to upload image");
+      }
+    }
+
+    setImages([]);
+
+    console.log(imageUrl);
+  };
+
+  const displayImages = (images) => {
+    for (let i = 0; i < images.length; i++) {
+      return (
+        <div>
+          <img
+            className="preview-image"
+            alt={images[i].name}
+            src={images[i]["data_url"]}
+          />
+          <div className="preview-title my-2">Image Preview</div>
+        </div>
+      );
     }
   };
 
+  const displayUploadedImages = (imageUrl) => {
+    return (
+      <div className="mt-3">
+        <img
+          alt={imageUrl[imageUrl.length - 1]}
+          className="preview-image"
+          src={imageUrl[imageUrl.length - 1]}
+        />
+        <div className="preview-title mt-2">Successfully Uploaded Image</div>
+      </div>
+    );
+  };
+
   return (
-    <div className="my-1">
+    <div className="mt-1">
       <ImageUploading value={images} onChange={onChange} dataURLKey="data_url">
         {({ imageList, onImageUpload, onImageRemoveAll }) => (
           <div>
             <div className="card-action-area">
-              {images.length !== 0 && (
-                <div>
-                  <img
-                    className="preview-image"
-                    alt={images[0].name}
-                    src={images[0]["data_url"]}
-                  />
-                  <div className="preview-title my-2">Image Preview</div>
-                </div>
-              )}
+              {images.length !== 0 && <div>{displayImages(images)}</div>}
 
               {imageList.length !== 0 && (
                 <div>
@@ -72,7 +99,7 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
             </div>
 
             {imageList.length !== 0 && (
-              <div className="d-flex gap-2 py-2">
+              <div className="d-flex gap-2 pt-2">
                 <button
                   className="btn btn-success"
                   type="button"
@@ -82,29 +109,19 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
                 </button>
               </div>
             )}
-
-            <div>
-              {imageList.length === 0 && (
+            {imageList.length === 0 && (
+              <div>
                 <button
                   type="button"
                   className="btn btn-secondary"
                   onClick={onImageUpload}
                 >
-                  Select Image
+                  {`Select${imageUrl.length !== 0 ? " Another" : ""} Image`}
                 </button>
-              )}
 
-              {imageUrl && (
-                <div className="uploaded-image-div">
-                  <img
-                    alt={imageUrl}
-                    className="preview-image"
-                    src={imageUrl}
-                  />
-                  <div className="preview-title my-2">Uploaded Image</div>
-                </div>
-              )}
-            </div>
+                {imageUrl.length !== 0 && displayUploadedImages(imageUrl)}
+              </div>
+            )}
           </div>
         )}
       </ImageUploading>

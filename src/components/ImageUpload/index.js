@@ -39,8 +39,6 @@ const ImageUpload = ({ setImageUrl, imageUrl }) => {
     }
 
     setImages([]);
-
-    console.log(imageUrl);
   };
 
   const displayImages = (images) => {
